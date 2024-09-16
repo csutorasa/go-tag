@@ -13,7 +13,7 @@ type PathValueStringParams struct {
 }
 
 func TestPathValueString(t *testing.T) {
-	testCreator := gotag.NewDecoder[PathValueStringParams](gotaghttp.PathParamWriter)
+	testCreator := gotag.NewDecoder[PathValueStringParams](gotaghttp.PathValueWriter)
 	err := doRequest("/{p1}/{p2}/23%2E45/234", "/test/value/23%2E45/234", "plain/text", []byte{}, testCreator, func(params PathValueStringParams) {
 		if params.Param1 != "test" {
 			t.Fail()
@@ -34,7 +34,7 @@ type PathValueNumberParams struct {
 }
 
 func TestPathValueNumber(t *testing.T) {
-	testCreator := gotag.NewDecoder[PathValueNumberParams](gotaghttp.PathParamWriter)
+	testCreator := gotag.NewDecoder[PathValueNumberParams](gotaghttp.PathValueWriter)
 	err := doRequest("/test/value/{p1}/{p2}", "/test/value/23%2E45/234", "plain/text", []byte{}, testCreator, func(params PathValueNumberParams) {
 		if params.Param1 != 23.45 {
 			t.Fail()

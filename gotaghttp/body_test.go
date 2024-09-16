@@ -9,7 +9,7 @@ import (
 )
 
 type BodyStringParams struct {
-	Body string `requestBody:""`
+	Body string `body:""`
 }
 
 func TestBodyString(t *testing.T) {
@@ -25,7 +25,7 @@ func TestBodyString(t *testing.T) {
 }
 
 type BodyByteArrayParams struct {
-	Body [10]byte `requestBody:""`
+	Body [10]byte `body:""`
 }
 
 func TestBodyByteArray(t *testing.T) {
@@ -41,7 +41,7 @@ func TestBodyByteArray(t *testing.T) {
 }
 
 type BodyByteSliceParams struct {
-	Body []byte `requestBody:""`
+	Body []byte `body:""`
 }
 
 func TestBodyByteSlice(t *testing.T) {
@@ -57,7 +57,7 @@ func TestBodyByteSlice(t *testing.T) {
 }
 
 type BodyReaderParams struct {
-	Body io.Reader `requestBody:""`
+	Body io.Reader `body:""`
 }
 
 func TestBodyReader(t *testing.T) {
@@ -77,7 +77,7 @@ func TestBodyReader(t *testing.T) {
 }
 
 type BodyReadCloserParams struct {
-	Body io.Reader `requestBody:""`
+	Body io.Reader `body:""`
 }
 
 func TestBodyReadCloser(t *testing.T) {
@@ -97,7 +97,7 @@ func TestBodyReadCloser(t *testing.T) {
 }
 
 type BodyJsonParams struct {
-	Body map[string]any `requestBody:"json"`
+	Body map[string]any `body:"json"`
 }
 
 func TestBodyJson(t *testing.T) {

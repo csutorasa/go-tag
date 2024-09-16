@@ -12,7 +12,7 @@ import (
 var DefaultWriters = []gotag.StructTagValueWriter[*http.Request]{
 	BodyWriter,
 	FormValueWriter,
-	PathParamWriter,
+	PathValueWriter,
 	QueryWriter,
 }
 

@@ -8,19 +8,19 @@ import (
 )
 
 // Struct tag for HTTP path params
-const TagPathParam string = "pathParam"
+const TagPathValue string = "pathValue"
 
-type pathParamStructTagValueWriter struct {
+type pathValueStructTagValueWriter struct {
 	writer gotag.ValueWriterFunc[string]
 }
 
 // Tag implements StructTagHandler
-func (w *pathParamStructTagValueWriter) Tag() string {
-	return TagPathParam
+func (w *pathValueStructTagValueWriter) Tag() string {
+	return TagPathValue
 }
 
 // Write implements StructTagValueWriter[*http.Request]
-func (w *pathParamStructTagValueWriter) Write(cmd *gotag.StructTagCommand, r *http.Request) error {
+func (w *pathValueStructTagValueWriter) Write(cmd *gotag.StructTagCommand, r *http.Request) error {
 	if len(cmd.TagValues()) == 0 {
 		return gotag.NewTagValueHandlerConfigError(cmd, "no tag value found")
 	}
@@ -34,11 +34,11 @@ func (w *pathParamStructTagValueWriter) Write(cmd *gotag.StructTagCommand, r *ht
 
 // Creates a new handler for HTTP path params.
 // It uses [net/http] Request.PathValue.
-func NewPathParamWriter(writer gotag.ValueWriterFunc[string]) *pathParamStructTagValueWriter {
-	return &pathParamStructTagValueWriter{
+func NewPathValueWriter(writer gotag.ValueWriterFunc[string]) *pathValueStructTagValueWriter {
+	return &pathValueStructTagValueWriter{
 		writer: writer,
 	}
 }
 
-// Default PathParamWriter.
-var PathParamWriter gotag.StructTagValueWriter[*http.Request] = NewPathParamWriter(gotag.NewFirstSupportedValueWriter(gotagio.WriteString, gotagio.WriteStrConv))
+// Default PathValueWriter.
+var PathValueWriter gotag.StructTagValueWriter[*http.Request] = NewPathValueWriter(gotag.NewFirstSupportedValueWriter(gotagio.WriteString, gotagio.WriteStrConv))

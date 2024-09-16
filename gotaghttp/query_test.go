@@ -8,8 +8,8 @@ import (
 )
 
 type QueryStringParams struct {
-	Param1 string `queryParam:"p1"`
-	Param2 string `queryParam:"p2"`
+	Param1 string `query:"p1"`
+	Param2 string `query:"p2"`
 }
 
 func TestQueryString(t *testing.T) {
@@ -28,9 +28,9 @@ func TestQueryString(t *testing.T) {
 }
 
 type QueryNumberParams struct {
-	Param1 float32 `queryParam:"p1"`
-	Param2 int     `queryParam:"p2"`
-	Param3 uint8   `queryParam:"p2"`
+	Param1 float32 `query:"p1"`
+	Param2 int     `query:"p2"`
+	Param3 uint8   `query:"p2"`
 }
 
 func TestQueryNumberString(t *testing.T) {
@@ -52,8 +52,8 @@ func TestQueryNumberString(t *testing.T) {
 }
 
 type QueryStringSliceParams struct {
-	Param1 []string `queryParam:"p1"`
-	Param2 []string `queryParam:"p2"`
+	Param1 []string `query:"p1"`
+	Param2 []string `query:"p2"`
 }
 
 func TestQueryStringSlice(t *testing.T) {
@@ -78,9 +78,9 @@ func TestQueryStringSlice(t *testing.T) {
 }
 
 type QueryNumberSliceParams struct {
-	Param1 []float32 `queryParam:"p1"`
-	Param2 []int     `queryParam:"p2"`
-	Param3 []uint8   `queryParam:"p2"`
+	Param1 []float32 `query:"p1"`
+	Param2 []int     `query:"p2"`
+	Param3 []uint8   `query:"p2"`
 }
 
 func TestQueryNumberSlice(t *testing.T) {

@@ -10,7 +10,7 @@ import (
 )
 
 // Struct tag for HTTP bodies
-const TagBody string = "requestBody"
+const TagBody string = "body"
 
 type bodyStructTagValueWriter struct {
 	converters map[string]gotag.ValueWriterFunc[io.Reader]
