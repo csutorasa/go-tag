@@ -8,13 +8,13 @@ import (
 	"github.com/csutorasa/go-tags/gotaghttp"
 )
 
-type RequestBodyStringParams struct {
+type BodyStringParams struct {
 	Body string `requestBody:""`
 }
 
-func TestRequestBodyString(t *testing.T) {
-	testCreator := gotag.NewDecoder[RequestBodyStringParams](gotaghttp.BodyWriter)
-	err := doRequest("/", "/", "plain/text", []byte("test"), testCreator, func(p RequestBodyStringParams) {
+func TestBodyString(t *testing.T) {
+	testCreator := gotag.NewDecoder[BodyStringParams](gotaghttp.BodyWriter)
+	err := doRequest("/", "/", "plain/text", []byte("test"), testCreator, func(p BodyStringParams) {
 		if p.Body != "test" {
 			t.Fail()
 		}
@@ -24,13 +24,13 @@ func TestRequestBodyString(t *testing.T) {
 	}
 }
 
-type RequestBodyByteArrayParams struct {
+type BodyByteArrayParams struct {
 	Body [10]byte `requestBody:""`
 }
 
-func TestRequestBodyByteArray(t *testing.T) {
-	testCreator := gotag.NewDecoder[RequestBodyByteArrayParams](gotaghttp.BodyWriter)
-	err := doRequest("/", "/", "plain/text", []byte("test"), testCreator, func(p RequestBodyByteArrayParams) {
+func TestBodyByteArray(t *testing.T) {
+	testCreator := gotag.NewDecoder[BodyByteArrayParams](gotaghttp.BodyWriter)
+	err := doRequest("/", "/", "plain/text", []byte("test"), testCreator, func(p BodyByteArrayParams) {
 		if string(p.Body[:4]) != "test" {
 			t.Fail()
 		}
@@ -40,13 +40,13 @@ func TestRequestBodyByteArray(t *testing.T) {
 	}
 }
 
-type RequestBodyByteSliceParams struct {
+type BodyByteSliceParams struct {
 	Body []byte `requestBody:""`
 }
 
-func TestRequestBodyByteSlice(t *testing.T) {
-	testCreator := gotag.NewDecoder[RequestBodyByteSliceParams](gotaghttp.BodyWriter)
-	err := doRequest("/", "/", "plain/text", []byte("test"), testCreator, func(p RequestBodyByteSliceParams) {
+func TestBodyByteSlice(t *testing.T) {
+	testCreator := gotag.NewDecoder[BodyByteSliceParams](gotaghttp.BodyWriter)
+	err := doRequest("/", "/", "plain/text", []byte("test"), testCreator, func(p BodyByteSliceParams) {
 		if string(p.Body) != "test" {
 			t.Fail()
 		}
@@ -56,13 +56,13 @@ func TestRequestBodyByteSlice(t *testing.T) {
 	}
 }
 
-type RequestBodyReaderParams struct {
+type BodyReaderParams struct {
 	Body io.Reader `requestBody:""`
 }
 
-func TestRequestBodyReader(t *testing.T) {
-	testCreator := gotag.NewDecoder[RequestBodyReaderParams](gotaghttp.BodyWriter)
-	err := doRequest("/", "/", "plain/text", []byte("test"), testCreator, func(p RequestBodyReaderParams) {
+func TestBodyReader(t *testing.T) {
+	testCreator := gotag.NewDecoder[BodyReaderParams](gotaghttp.BodyWriter)
+	err := doRequest("/", "/", "plain/text", []byte("test"), testCreator, func(p BodyReaderParams) {
 		result, err := io.ReadAll(p.Body)
 		if err != nil {
 			t.Fatal(err)
@@ -76,13 +76,13 @@ func TestRequestBodyReader(t *testing.T) {
 	}
 }
 
-type RequestBodyReadCloserParams struct {
+type BodyReadCloserParams struct {
 	Body io.Reader `requestBody:""`
 }
 
-func TestRequestBodyReadCloser(t *testing.T) {
-	testCreator := gotag.NewDecoder[RequestBodyReadCloserParams](gotaghttp.BodyWriter)
-	err := doRequest("/", "/", "plain/text", []byte("test"), testCreator, func(p RequestBodyReadCloserParams) {
+func TestBodyReadCloser(t *testing.T) {
+	testCreator := gotag.NewDecoder[BodyReadCloserParams](gotaghttp.BodyWriter)
+	err := doRequest("/", "/", "plain/text", []byte("test"), testCreator, func(p BodyReadCloserParams) {
 		result, err := io.ReadAll(p.Body)
 		if err != nil {
 			t.Fatal(err)
@@ -96,13 +96,13 @@ func TestRequestBodyReadCloser(t *testing.T) {
 	}
 }
 
-type RequestBodyJsonParams struct {
+type BodyJsonParams struct {
 	Body map[string]any `requestBody:"json"`
 }
 
-func TestRequestBodyJson(t *testing.T) {
-	testCreator := gotag.NewDecoder[RequestBodyJsonParams](gotaghttp.BodyWriter)
-	err := doRequest("/", "/", "application/json", []byte("{\"test\": \"value\"}"), testCreator, func(p RequestBodyJsonParams) {
+func TestBodyJson(t *testing.T) {
+	testCreator := gotag.NewDecoder[BodyJsonParams](gotaghttp.BodyWriter)
+	err := doRequest("/", "/", "application/json", []byte("{\"test\": \"value\"}"), testCreator, func(p BodyJsonParams) {
 		v, ok := p.Body["test"]
 		if !ok {
 			t.Fail()

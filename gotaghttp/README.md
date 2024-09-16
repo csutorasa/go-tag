@@ -27,7 +27,11 @@ func main() {
 	http.HandleFunc("POST /user/{userId}", func(w http.ResponseWriter, r *http.Request) {
 		p, err := exampleRequestDecoder.Decode(r)
 		if err != nil {
-			w.WriteHeader(400)
+			if gotaghttp.IsExecutionError(err) {
+				w.WriteHeader(400)
+			} else {
+				w.WriteHeader(500)
+			}
 			w.Write([]byte(err.Error()))
 			return
 		}

@@ -8,21 +8,21 @@ import (
 	"github.com/csutorasa/go-tags/gotagio"
 )
 
-// Struct tag for HTTP query params
-const TagQueryParam string = "queryParam"
+// Struct tag for HTTP query
+const TagQuery string = "query"
 
-type queryParamStructTagValueWriter struct {
+type queryStructTagValueWriter struct {
 	writer      gotag.ValueWriterFunc[string]
 	sliceWriter gotag.ValueWriterFunc[[]string]
 }
 
 // Tag implements StructTagHandler
-func (w *queryParamStructTagValueWriter) Tag() string {
-	return TagQueryParam
+func (w *queryStructTagValueWriter) Tag() string {
+	return TagQuery
 }
 
 // Write implements StructTagValueWriter[*http.Request]
-func (w *queryParamStructTagValueWriter) Write(command *gotag.StructTagCommand, r *http.Request) error {
+func (w *queryStructTagValueWriter) Write(command *gotag.StructTagCommand, r *http.Request) error {
 	if len(command.TagValues()) == 0 {
 		return gotag.NewTagValueHandlerConfigError(command, "no tag value found")
 	}
@@ -46,12 +46,12 @@ func (w *queryParamStructTagValueWriter) Write(command *gotag.StructTagCommand, 
 
 // Creates a new handler for HTTP query params.
 // It uses [net/http] Request.URL.Query().
-func NewQueryParamWriter(writer gotag.ValueWriterFunc[string]) *queryParamStructTagValueWriter {
-	return &queryParamStructTagValueWriter{
+func NewQueryWriter(writer gotag.ValueWriterFunc[string]) *queryStructTagValueWriter {
+	return &queryStructTagValueWriter{
 		writer:      writer,
-		sliceWriter: gotag.NewValueWriters(gotagio.NewSliceValueWriter(writer), gotagio.NewArrayValueWriter(writer)),
+		sliceWriter: gotag.NewFirstSupportedValueWriter(gotagio.NewSliceValueWriter(writer), gotagio.NewArrayValueWriter(writer)),
 	}
 }
 
-// Default QueryParamWriter.
-var QueryParamWriter gotag.StructTagValueWriter[*http.Request] = NewQueryParamWriter(gotag.NewValueWriters(gotagio.WriteString, gotagio.WriteStrConv))
+// Default QueryWriter.
+var QueryWriter gotag.StructTagValueWriter[*http.Request] = NewQueryWriter(gotag.NewFirstSupportedValueWriter(gotagio.WriteString, gotagio.WriteStrConv))

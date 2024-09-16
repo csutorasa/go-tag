@@ -117,7 +117,7 @@ func WriteStrConvComplex(v reflect.Value, s string) (bool, error) {
 }
 
 // A combined [gotag.ValueWriterFunc] for all [strconv] [gotag.ValueWriterFunc]s.
-var WriteStrConv gotag.ValueWriterFunc[string] = gotag.NewValueWriters(
+var WriteStrConv gotag.ValueWriterFunc[string] = gotag.NewFirstSupportedValueWriter(
 	WriteStrConvBool,
 	WriteStrConvInt,
 	WriteStrConvUint,
@@ -171,7 +171,7 @@ func ReadStrConvComplex(v reflect.Value) (string, bool, error) {
 }
 
 // A combined [gotag.ValueReaderFunc] for all [strconv] [gotag.ValueReaderFunc]s.
-var ReadStrConv gotag.ValueReaderFunc[string] = gotag.NewValueReaders(
+var ReadStrConv gotag.ValueReaderFunc[string] = gotag.NewFirstSupportedValueReader(
 	ReadStrConvBool,
 	ReadStrConvInt,
 	ReadStrConvUint,

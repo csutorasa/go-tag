@@ -7,14 +7,14 @@ import (
 	"github.com/csutorasa/go-tags/gotaghttp"
 )
 
-type QueryParamStringParams struct {
+type QueryStringParams struct {
 	Param1 string `queryParam:"p1"`
 	Param2 string `queryParam:"p2"`
 }
 
-func TestQueryParamString(t *testing.T) {
-	testCreator := gotag.NewDecoder[QueryParamStringParams](gotaghttp.QueryParamWriter)
-	err := doRequest("/", "/?p1=test&p2=value", "plain/text", []byte{}, testCreator, func(params QueryParamStringParams) {
+func TestQueryString(t *testing.T) {
+	testCreator := gotag.NewDecoder[QueryStringParams](gotaghttp.QueryWriter)
+	err := doRequest("/", "/?p1=test&p2=value", "plain/text", []byte{}, testCreator, func(params QueryStringParams) {
 		if params.Param1 != "test" {
 			t.Fail()
 		}
@@ -27,15 +27,15 @@ func TestQueryParamString(t *testing.T) {
 	}
 }
 
-type QueryParamNumberParams struct {
+type QueryNumberParams struct {
 	Param1 float32 `queryParam:"p1"`
 	Param2 int     `queryParam:"p2"`
 	Param3 uint8   `queryParam:"p2"`
 }
 
 func TestQueryNumberString(t *testing.T) {
-	testCreator := gotag.NewDecoder[QueryParamNumberParams](gotaghttp.QueryParamWriter)
-	err := doRequest("/", "/?p1=23%2E45&p2=234", "plain/text", []byte{}, testCreator, func(params QueryParamNumberParams) {
+	testCreator := gotag.NewDecoder[QueryNumberParams](gotaghttp.QueryWriter)
+	err := doRequest("/", "/?p1=23%2E45&p2=234", "plain/text", []byte{}, testCreator, func(params QueryNumberParams) {
 		if params.Param1 != 23.45 {
 			t.Fail()
 		}
@@ -51,14 +51,14 @@ func TestQueryNumberString(t *testing.T) {
 	}
 }
 
-type QueryParamStringSliceParams struct {
+type QueryStringSliceParams struct {
 	Param1 []string `queryParam:"p1"`
 	Param2 []string `queryParam:"p2"`
 }
 
-func TestQueryParamStringSlice(t *testing.T) {
-	testCreator := gotag.NewDecoder[QueryParamStringSliceParams](gotaghttp.QueryParamWriter)
-	err := doRequest("/", "/?p1=test&p1=value", "plain/text", []byte{}, testCreator, func(params QueryParamStringSliceParams) {
+func TestQueryStringSlice(t *testing.T) {
+	testCreator := gotag.NewDecoder[QueryStringSliceParams](gotaghttp.QueryWriter)
+	err := doRequest("/", "/?p1=test&p1=value", "plain/text", []byte{}, testCreator, func(params QueryStringSliceParams) {
 		if len(params.Param1) != 2 {
 			t.Fail()
 		}
@@ -77,15 +77,15 @@ func TestQueryParamStringSlice(t *testing.T) {
 	}
 }
 
-type QueryParamNumberSliceParams struct {
+type QueryNumberSliceParams struct {
 	Param1 []float32 `queryParam:"p1"`
 	Param2 []int     `queryParam:"p2"`
 	Param3 []uint8   `queryParam:"p2"`
 }
 
-func TestQueryParamNumberSlice(t *testing.T) {
-	testCreator := gotag.NewDecoder[QueryParamNumberSliceParams](gotaghttp.QueryParamWriter)
-	err := doRequest("/", "/?p1=23%2E45&p2=234", "plain/text", []byte{}, testCreator, func(params QueryParamNumberSliceParams) {
+func TestQueryNumberSlice(t *testing.T) {
+	testCreator := gotag.NewDecoder[QueryNumberSliceParams](gotaghttp.QueryWriter)
+	err := doRequest("/", "/?p1=23%2E45&p2=234", "plain/text", []byte{}, testCreator, func(params QueryNumberSliceParams) {
 		if params.Param1[0] != 23.45 {
 			t.Fail()
 		}

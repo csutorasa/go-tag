@@ -45,4 +45,4 @@ func NewFormValueWriter(writer gotag.ValueWriterFunc[string]) *formValueStructTa
 }
 
 // Default FormValueWriter.
-var FormValueWriter gotag.StructTagValueWriter[*http.Request] = NewFormValueWriter(gotag.NewValueWriters(gotagio.WriteString, gotagio.WriteStrConv))
+var FormValueWriter gotag.StructTagValueWriter[*http.Request] = NewFormValueWriter(gotag.NewFirstSupportedValueWriter(gotagio.WriteString, gotagio.WriteStrConv))

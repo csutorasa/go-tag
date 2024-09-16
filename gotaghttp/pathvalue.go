@@ -41,4 +41,4 @@ func NewPathParamWriter(writer gotag.ValueWriterFunc[string]) *pathParamStructTa
 }
 
 // Default PathParamWriter.
-var PathParamWriter gotag.StructTagValueWriter[*http.Request] = NewPathParamWriter(gotag.NewValueWriters(gotagio.WriteString, gotagio.WriteStrConv))
+var PathParamWriter gotag.StructTagValueWriter[*http.Request] = NewPathParamWriter(gotag.NewFirstSupportedValueWriter(gotagio.WriteString, gotagio.WriteStrConv))

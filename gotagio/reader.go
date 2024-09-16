@@ -57,7 +57,7 @@ func WriteStringFromReader(v reflect.Value, r io.Reader) (bool, error) {
 }
 
 // A combined [gotag.ValueWriterFunc] for all [io.WriteFromReader] based [gotag.ValueWriterFunc]s.
-var WriteFromReader gotag.ValueWriterFunc[io.Reader] = gotag.NewValueWriters(
+var WriteFromReader gotag.ValueWriterFunc[io.Reader] = gotag.NewFirstSupportedValueWriter(
 	WriteByteArrayFromReader,
 	WriteBytesFromReader,
 	WriteReaderFromReader[io.Reader],

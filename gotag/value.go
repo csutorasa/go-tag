@@ -26,12 +26,28 @@ func (f ValueWriterFunc[S]) WriteValue(c *StructTagCommand, source S) error {
 // Each function is executed in natural order.
 // Returns the result from the first supported function.
 // Return false and nil error, if no function supports the value.
-func NewValueWriters[S any](writers ...ValueWriterFunc[S]) ValueWriterFunc[S] {
+func NewFirstSupportedValueWriter[S any](writers ...ValueWriterFunc[S]) ValueWriterFunc[S] {
 	return func(value reflect.Value, source S) (bool, error) {
 		for _, writer := range writers {
 			supports, err := writer(value, source)
 			if supports {
 				return true, err
+			}
+		}
+		return false, nil
+	}
+}
+
+// Combines multiple [gotag.ValueWriterFunc] into a single one.
+// Each function is executed in natural order.
+// Returns the result from the first supported function which executes without errors.
+// Return false and nil error, if no function supports the value or all supported functions fail.
+func NewFirstSucceedValueWriter[S any](writers ...ValueWriterFunc[S]) ValueWriterFunc[S] {
+	return func(value reflect.Value, source S) (bool, error) {
+		for _, writer := range writers {
+			supports, err := writer(value, source)
+			if supports && err == nil {
+				return true, nil
 			}
 		}
 		return false, nil
@@ -60,12 +76,30 @@ func (f ValueReaderFunc[R]) ReadValue(c *StructTagCommand) (R, error) {
 // Each function is executed in natural order.
 // Returns the result from the first supported function.
 // Return default value, false and nil error, if no function supports the value.
-func NewValueReaders[R any](readers ...ValueReaderFunc[R]) ValueReaderFunc[R] {
+func NewFirstSupportedValueReader[R any](readers ...ValueReaderFunc[R]) ValueReaderFunc[R] {
 	return func(value reflect.Value) (R, bool, error) {
 		for _, reader := range readers {
 			result, supports, err := reader(value)
 			if supports {
 				return result, true, err
+			}
+
+		}
+		var r R
+		return r, false, nil
+	}
+}
+
+// Combines multiple [gotag.ValueReaderFunc] into a single one.
+// Each function is executed in natural order.
+// Returns the result from the first supported function.
+// Return default value, false and nil error, if no function supports the value or all supported functions fail.
+func NewFirstSucceedValueReader[R any](readers ...ValueReaderFunc[R]) ValueReaderFunc[R] {
+	return func(value reflect.Value) (R, bool, error) {
+		for _, reader := range readers {
+			result, supports, err := reader(value)
+			if supports && err == nil {
+				return result, true, nil
 			}
 
 		}

@@ -23,6 +23,14 @@ func TestGetString(t *testing.T) {
 	}
 }
 
+func TestBoolWriter(t *testing.T) {
+	var b bool
+	writeValue(t, gotagio.NewBoolWriter([]string{"yes"}, []string{"no"}), &b, "yes")
+	if !b {
+		t.Fatal("failed to match value")
+	}
+}
+
 type StringerTest struct {
 	s string
 }

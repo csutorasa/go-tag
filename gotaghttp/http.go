@@ -2,6 +2,7 @@
 package gotaghttp
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/csutorasa/go-tags/gotag"
@@ -12,5 +13,11 @@ var DefaultWriters = []gotag.StructTagValueWriter[*http.Request]{
 	BodyWriter,
 	FormValueWriter,
 	PathParamWriter,
-	QueryParamWriter,
+	QueryWriter,
+}
+
+// Checks if the execution is due the invalid or unexpected data.
+func IsExecutionError(err error) bool {
+	executionErr := &gotag.StructTagHandlerExecutionError{}
+	return errors.As(err, &executionErr)
 }
