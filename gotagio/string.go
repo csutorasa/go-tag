@@ -49,14 +49,6 @@ func NewBoolWriter(trueValues []string, falseValues []string) gotag.ValueWriterF
 	}
 }
 
-// [gotag.ValueReaderFunc] that gets a string value from string [reflect.Value].
-func ReadBool(v reflect.Value) (string, bool, error) {
-	if v.Kind() != reflect.String {
-		return "", false, nil
-	}
-	return v.String(), true, nil
-}
-
 // [gotag.ValueWriterFunc] that sets the [fmt.Stringer] formatted string value to string [reflect.Value].
 func WriteStringer(v reflect.Value, s fmt.Stringer) (bool, error) {
 	return WriteString(v, s.String())
