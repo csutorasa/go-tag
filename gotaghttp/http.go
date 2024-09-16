@@ -1,3 +1,4 @@
+// Defines [gotags.StructTagHandler]s for managing a [net/http] Request.
 package gotaghttp
 
 import (

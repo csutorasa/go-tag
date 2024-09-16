@@ -1,6 +1,8 @@
 # gotaghttp
 
-Example
+This package defines `gotags.StructTagHandler`s to handle `net/http.Request`s.
+
+## Example
 
 ```go
 package main
